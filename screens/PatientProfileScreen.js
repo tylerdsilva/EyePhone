@@ -1,28 +1,92 @@
 import * as React from 'react';
-import {View, Text, StyleSheet, Button} from 'react-native';
+import {View, Button, Text, StyleSheet, TextInput, ScrollView, KeyboardAvoidingView} from 'react-native';
+import PatientLoginScreen from './PatientLoginScreen';
+import AdministratorLoginScreen from './AdministratorLoginScreen';
+import PatientHistoryScreen from './PatientHistoryScreen';
 
 export default function PatientProfileScreen({navigation}) {
     return (
-        <View style={{ flex: 1, alignItems: 'center', top: 160 }}>
-            <Text style = {styles.patientLoginTitle}>Patient Profile</Text>
-            <Text style = {styles.patientLoginDesc}>Enter patient's health card information</Text>
-            <Button
-                title="Submit"
-                onPress={() => navigation.navigate('PatientLogin')}
-            />
+        <><View style={{ alignItems: 'center', backgroundColor: '#FFFFFF', borderBottomColor: 'black', borderBottomWidth: 0.5 }}>
+            <Text style={styles.screenTitle}>Patient Profile</Text>
         </View>
+        <Button title="History"
+                onPress={() => navigation.navigate('PatientHistory')} />
+        
+        <ScrollView style={{ backgroundColor: '#FFFFFF' }}>
+            <KeyboardAvoidingView behavior='padding'>
+            <View>
+                <Text style={styles.patientInfo}> Name: John Doe</Text>
+                <Text style={styles.patientInfo}> Sex: Male</Text>
+                <Text style={styles.patientInfo}> Age: 23</Text>
+                <Text style={styles.patientInfo}> Height: 6'0</Text>
+                <Text style={styles.patientInfo}> Weight: 200lbs</Text>
+            </View>
+
+            <View style={{ top: 40, flex: 1, borderBottomColor: 'black', borderBottomWidth: 0.5 }} />
+
+            <View style={{ marginTop: 60 }}>
+                <Text style={styles.patientSubHeading}> Prescribed Medications</Text>
+                <TextInput
+                    style={{
+                        height: 90,
+                        position: 'relative',
+                        marginLeft: 25,
+                        marginRight: 25,
+                        marginTop: 20,
+                        borderColor: '#7B8794',
+                        borderWidth: 1,
+                        borderRadius: 20,
+                        backgroundColor: '#FFFFFF',
+                        //   onChangeText={text => onChangeText(text)}
+                        //   value={value}
+                        // change in next sprint
+                    }} />
+
+            </View>
+
+            <View style={{ marginTop: 60 }}>
+                <Text style={styles.patientSubHeading}> Patient Notes</Text>
+                <TextInput
+                    style={{
+                        height: 90,
+                        position: 'relative',
+                        marginLeft: 25,
+                        marginRight: 25,
+                        marginTop: 20,
+                        borderColor: '#7B8794',
+                        borderWidth: 1,
+                        borderRadius: 20,
+                        backgroundColor: '#FFFFFF',
+                        //   onChangeText={text => onChangeText(text)}
+                        //   value={value}
+                        // change in next sprint
+                    }} />
+            </View>
+
+        </KeyboardAvoidingView></ScrollView></>
+
     );
 }
 
 const styles = StyleSheet.create({
-    patientLoginTitle: {
+    screenTitle: {
         fontWeight: "bold",
-        fontSize: 30,
+        fontSize: 20,
         position: 'relative',
+        alignItems: 'center',
+        marginTop: 56,
+        marginBottom: 16
     },
-    patientLoginDesc: {
+    patientInfo: {
         fontSize: 16,
-        top: 20,
-        marginBottom: 40,
+        position: 'relative',
+        marginLeft: 20,
+        marginTop: 20
+    },
+    patientSubHeading: {
+        fontWeight: "bold",
+        fontSize: 20,
+        position: 'relative',
+        marginLeft: 20
     },
 })
