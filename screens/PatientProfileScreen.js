@@ -1,8 +1,5 @@
 import * as React from 'react';
 import {View, Button, Text, StyleSheet, TextInput, ScrollView, KeyboardAvoidingView} from 'react-native';
-import PatientLoginScreen from './PatientLoginScreen';
-import AdministratorLoginScreen from './AdministratorLoginScreen';
-import PatientHistoryScreen from './PatientHistoryScreen';
 
 export default function PatientProfileScreen({navigation}) {
     return (
@@ -10,7 +7,11 @@ export default function PatientProfileScreen({navigation}) {
             <Text style={styles.screenTitle}>Patient Profile</Text>
         </View>
         <Button title="History"
-                onPress={() => navigation.navigate('PatientHistory')} />
+            onPress={() => navigation.navigate('PatientHistory')} />
+        <Button title="Analysis"
+            onPress={() => navigation.navigate('Analysis')} />
+        <Button title="Camera"
+             />
         
         <ScrollView style={{ backgroundColor: '#FFFFFF' }}>
             <KeyboardAvoidingView behavior='padding'>
