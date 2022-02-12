@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { AdministratorLoginScreen, PatientLoginScreen,  PatientProfileScreen, PatientHistoryScreen } from './screens';
+import { AdministratorLoginScreen, PatientLoginScreen,  PatientProfileScreen, PatientHistoryScreen, AnalysisScreen } from './screens';
 
 const Stack = createNativeStackNavigator();
 
@@ -13,6 +13,8 @@ export default function App() {
         <Stack.Screen name="PatientLogin" component= {PatientLoginScreen} options={{headerShown: false}}/>
         <Stack.Screen name="PatientProfile" component= {PatientProfileScreen} options= {{headerShown: false}}/>
         <Stack.Screen name="PatientHistory" component= {PatientHistoryScreen} options= {{headerShown: false}}/>
+        <Stack.Screen name="Analysis" component= {AnalysisScreen} options= {{headerShown: false}}/>
+
 
       </Stack.Navigator>
     </NavigationContainer>
