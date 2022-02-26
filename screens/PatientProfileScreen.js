@@ -11,7 +11,8 @@ export default function PatientProfileScreen({navigation}) {
         <Button title="Analysis"
             onPress={() => navigation.navigate('Analysis')} />
         <Button title="Camera"
-             />
+            onPress={() => navigation.navigate('Camera')} 
+            />
         
         <ScrollView style={{ backgroundColor: '#FFFFFF' }}>
             <KeyboardAvoidingView behavior='padding'>
