@@ -1,6 +1,17 @@
 import * as React from 'react';
 import {View, Button, Text, StyleSheet, TextInput, ScrollView, Image, KeyboardAvoidingView} from 'react-native';
 
+const getMetricsFromAPI = () => {
+    return fetch('name')
+      .then((response) => response.json())
+      .then((json) => {
+        return json.name;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
 export default function AnalysisScreen({navigation}) {
     return (
         <>
