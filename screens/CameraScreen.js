@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet ,Text, View, Button, Image} from 'react-native';
 import { Camera } from 'expo-camera';
 import { Video } from 'expo-av';
+import * as FileSystem from "expo-file-system";
+
 
 export default function App() {
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
@@ -14,10 +16,15 @@ export default function App() {
   // video playback
   const video = React.useRef(null);
   const [status, setStatus] = React.useState({});
+  const BACKEND = "https://nameless-beyond-55383.herokuapp.com/metrics/";
+  const [recording, setRecording] = React.useState();
+  
+
+
 
 useEffect(() => {
     (async () => {
-      const cameraStatus = await Camera.requestPermissionsAsync();
+      const cameraStatus = await Camera.requestCameraPermissionsAsync();
       setHasCameraPermission(cameraStatus.status === 'granted');
 
       const audioStatus = await Camera.requestMicrophonePermissionsAsync();
@@ -26,6 +33,10 @@ useEffect(() => {
 })();
   }, []);
   
+  if (hasCameraPermission === false || hasAudioPermission === false || hasCameraPermission === null || hasAudioPermission === null) {
+    return <Text>No access to camera</Text>;
+  }
+
 const takePicture = async () => {
     if(camera){
         const data = await camera.takePictureAsync(null)
@@ -33,25 +44,59 @@ const takePicture = async () => {
     }
   }
 
-  if (hasCameraPermission === false || hasAudioPermission === false || hasCameraPermission === null || hasAudioPermission === null) {
-    return <Text>No access to camera</Text>;
-  }
-
   const takeVideo = async () => {
     if(camera){
-        const data = await camera.recordAsync()
-        setRecord(data.uri);
-        console.log(data.uri);
+        // const data = await camera.recordAsync()
+        const recording = await camera.recordAsync();
+        // setRecord(data.uri);
+        // console.log(data.uri);
+        setRecording(recording);
+        console.log(recording);
     }
+    
   }
 
+
+  // const stopVideo = async () => {
+  //   camera.stopRecording();
+  //   try {
+  //     const response = await FileSystem.uploadAsync(
+  //       BACKEND,
+  //       uri
+  //     );
+  //     const body = JSON.parse(response.body);
+  //     setText(body.text);
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // }
 
   const stopVideo = async () => {
     camera.stopRecording();
+    setRecording(undefined);
+    await recording.stopAndUnloadAsync();
+    const uri = recording.getURI();
+    console.log(recording)
+
+
+    try {
+      const response = await FileSystem.uploadAsync(
+        BACKEND,
+        uri
+      );
+      const body = JSON.parse(response.body);
+      setText(body.text);
+      console.log("ayo");
+      console.log(body);
+    } catch (err) {
+      console.error(err);
+      this.setState({errorMessage: error.message});
+    }
+
   }
 
 
-  return (
+  return (    
    <View style={{ flex: 1}}>
       <View style={styles.cameraContainer}>
             <Camera 
