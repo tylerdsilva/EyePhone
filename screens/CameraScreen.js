@@ -9,6 +9,7 @@ export default function App() {
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [camera, setCamera] = useState(null);
   const [image, setImage] = useState(null);
+  const [data, setData] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
   // audio/video permissions
   const [hasAudioPermission, setHasAudioPermission] = useState(null);
@@ -18,6 +19,7 @@ export default function App() {
   const [status, setStatus] = React.useState({});
   const BACKEND = "https://nameless-beyond-55383.herokuapp.com/metrics/";
   const [recording, setRecording] = React.useState();
+
   
 
 
@@ -37,32 +39,33 @@ useEffect(() => {
     return <Text>No access to camera</Text>;
   }
 
-const takePicture = async () => {
-    if(camera){
-        const data = await camera.takePictureAsync(null)
-        setImage(data.uri);
-    }
-  }
+// const takePicture = async () => {
+//     if(camera){
+//         const data = await camera.takePictureAsync(null)
+//         setImage(data.uri);
+//     }
+//   }
 
   const takeVideo = async () => {
     if(camera){
         const data = await camera.recordAsync()
         setRecord(data.uri);
-        console.log(data.uri);
-        setRecording(recording);
-        console.log(recording)
-    }
-    
+        //console.log(data.uri);
+        // setRecording(recording);
+        console.log(record)
+      }    
   }
 
 
   const stopVideo = async () => {
     camera.stopRecording();
     try {
+      console.log(record)
       const response = await FileSystem.uploadAsync(
         BACKEND,
-        data.uri // can't find data here
+        record // can't find data here
       );
+      console.log(response)
       const body = JSON.parse(response.body);
       setText(body.text);
     } catch (err) {
