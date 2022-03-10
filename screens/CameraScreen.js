@@ -46,19 +46,36 @@ const takePicture = async () => {
 
   const takeVideo = async () => {
     if(camera){
-        // const data = await camera.recordAsync()
-        const recording = await camera.recordAsync();
-        // setRecord(data.uri);
-        // console.log(data.uri);
+        const data = await camera.recordAsync()
+        setRecord(data.uri);
+        console.log(data.uri);
         setRecording(recording);
-        console.log(recording);
+        console.log(recording)
     }
     
   }
 
 
+  const stopVideo = async () => {
+    camera.stopRecording();
+    try {
+      const response = await FileSystem.uploadAsync(
+        BACKEND,
+        data.uri // can't find data here
+      );
+      const body = JSON.parse(response.body);
+      setText(body.text);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   // const stopVideo = async () => {
   //   camera.stopRecording();
+  //   setRecording(undefined);
+  //   await recording.stopAndUnloadAsync();
+  //   const uri = recording.getURI();
+
   //   try {
   //     const response = await FileSystem.uploadAsync(
   //       BACKEND,
@@ -66,34 +83,14 @@ const takePicture = async () => {
   //     );
   //     const body = JSON.parse(response.body);
   //     setText(body.text);
+  //     console.log("ayo");
+  //     console.log(body);
   //   } catch (err) {
   //     console.error(err);
+  //     this.setState({errorMessage: error.message});
   //   }
+
   // }
-
-  const stopVideo = async () => {
-    camera.stopRecording();
-    setRecording(undefined);
-    await recording.stopAndUnloadAsync();
-    const uri = recording.getURI();
-    console.log(recording)
-
-
-    try {
-      const response = await FileSystem.uploadAsync(
-        BACKEND,
-        uri
-      );
-      const body = JSON.parse(response.body);
-      setText(body.text);
-      console.log("ayo");
-      console.log(body);
-    } catch (err) {
-      console.error(err);
-      this.setState({errorMessage: error.message});
-    }
-
-  }
 
 
   return (    
