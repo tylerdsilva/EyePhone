@@ -17,7 +17,7 @@ export default function App() {
   // video playback
   const video = React.useRef(null);
   const [status, setStatus] = React.useState({});
-  const BACKEND = "https://nameless-beyond-55383.herokuapp.com/metrics/";
+  const BACKEND = "https://arcane-retreat-40409.herokuapp.com/metrics/";
   const [recording, setRecording] = React.useState();
 
   
@@ -61,13 +61,20 @@ useEffect(() => {
     camera.stopRecording();
     try {
       console.log(record)
+      // const options = {
+      //   headers: {
+      //     'Content-Type': 'application/json; charset=utf-8'
+      //   }
+      // }
       const response = await FileSystem.uploadAsync(
         BACKEND,
-        record // can't find data here
+        record// can't find data here
+        // options
       );
       console.log(response)
       const body = JSON.parse(response.body);
-      setText(body.text);
+      // setText(body.text);
+      console.log(body)
     } catch (err) {
       console.error(err);
     }

@@ -2,10 +2,10 @@ import * as React from 'react';
 import {View, Button, Text, StyleSheet, TextInput, ScrollView, Image, KeyboardAvoidingView} from 'react-native';
 
 const getMetricsFromAPI = () => {
-    return fetch('name')
+    return fetch('https://arcane-retreat-40409.herokuapp.com/metrics/')
       .then((response) => response.json())
       .then((json) => {
-        return json.name;
+        return json.parse(response.body);
       })
       .catch((error) => {
         console.error(error);
@@ -30,7 +30,7 @@ export default function AnalysisScreen({navigation}) {
                     <View style={styles.metricBox}>
                         <View style={styles.valueBox}>
                             <Text style={styles.metricTitle}>Diameter</Text>
-                            <Text style={styles.metricValue}>1.92 mm</Text>
+                            <Text style={styles.metricValue}>response.body</Text>
                         </View>
 
                         <View style={styles.valueBox}>
