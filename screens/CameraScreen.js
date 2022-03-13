@@ -3,9 +3,11 @@ import { StyleSheet ,Text, View, Button, Image} from 'react-native';
 import { Camera } from 'expo-camera';
 import { Video } from 'expo-av';
 import * as FileSystem from "expo-file-system";
+import { CommonActions, useNavigation } from '@react-navigation/native' 
 
 
-export default function App() {
+
+export default function CameraScreen() {
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [camera, setCamera] = useState(null);
   const [image, setImage] = useState(null);
@@ -19,6 +21,7 @@ export default function App() {
   const [status, setStatus] = React.useState({});
   const BACKEND = "https://arcane-retreat-40409.herokuapp.com/metrics/";
   const [recording, setRecording] = React.useState();
+  const navigation = useNavigation()
 
   
 
@@ -59,25 +62,24 @@ useEffect(() => {
 
   const stopVideo = async () => {
     camera.stopRecording();
-    try {
-      console.log(record)
-      // const options = {
-      //   headers: {
-      //     'Content-Type': 'application/json; charset=utf-8'
-      //   }
-      // }
-      const response = await FileSystem.uploadAsync(
-        BACKEND,
-        record// can't find data here
-        // options
-      );
-      console.log(response)
-      const body = JSON.parse(response.body);
-      // setText(body.text);
-      console.log(body)
-    } catch (err) {
-      console.error(err);
-    }
+    // try {
+    //   // console.log(record)
+    //   // const options = {
+    //   //   headers: {
+    //   //     'Content-Type': 'application/json; charset=utf-8'
+    //   //   }
+    //   // }
+    //   const response = await FileSystem.uploadAsync(
+    //     BACKEND,
+    //     record
+    //   );
+    //   console.log(response)
+    //   const body = JSON.parse(response.body);
+    //   // setText(body.text);
+    //   console.log(body)
+    // } catch (err) {
+    //   console.error(err);
+    // }
   }
 
   // const stopVideo = async () => {
@@ -110,24 +112,15 @@ useEffect(() => {
             ref={ref => setCamera(ref)}
             style={styles.fixedRatio} 
             type={type}
-            ratio={'1:1'} />
+            ratio={'4:3'} />
       </View>
-      <Button
-        title="Flip Video"
-        onPress={() => {
-        setType(
-          type === Camera.Constants.Type.back
-          ? Camera.Constants.Type.front
-          : Camera.Constants.Type.back
-          );
-          }}>
-      </Button>
 
       <Button title="Take video" onPress={() => takeVideo()} />
       <Button title="Stop Video" onPress={() => stopVideo()} />
+      <Button title="Replay"
+            onPress={() => navigation.navigate('CameraReplay', {paramKey: record})} 
+            />
 
-       {/* <Button title="Take Picture" onPress={() => takePicture()} />
-        {image && <Image source={{uri: image}} style={{flex:1}}/>} */}
 
       <Video
         ref={video}
@@ -141,14 +134,14 @@ useEffect(() => {
         onPlaybackStatusUpdate={status => setStatus(() => status)}
       />
 
-      <View style={styles.buttons}>
+      {/* <View style={styles.buttons}>
         <Button
           title={status.isPlaying ? 'Pause' : 'Play'}
           onPress={() =>
             status.isPlaying ? video.current.pauseAsync() : video.current.playAsync()
           }
         />
-      </View>
+      </View> */}
 
    </View>
   );
@@ -161,12 +154,12 @@ const styles = StyleSheet.create({
   },
   fixedRatio:{
       flex: 1,
-      aspectRatio: 1
+      // aspectRatio: 1
   },
   video: {
     alignSelf: 'center',
-    width: 350,
-    height: 220,
+    // width: 350,
+    // height: 220,
   },
   buttons: {
     flexDirection: 'row',

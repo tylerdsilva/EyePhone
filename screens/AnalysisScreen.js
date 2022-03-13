@@ -1,18 +1,22 @@
-import * as React from 'react';
+// import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import {View, Button, Text, StyleSheet, TextInput, ScrollView, Image, KeyboardAvoidingView} from 'react-native';
 
-const getMetricsFromAPI = () => {
-    return fetch('https://arcane-retreat-40409.herokuapp.com/metrics/')
-      .then((response) => response.json())
-      .then((json) => {
-        return json.parse(response.body);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
+export default function AnalysisScreen({route, navigation}) {
+    // const [isLoading, setLoading] = useState(true);
+    // const [response, setResponse] = useState([]);
+    // console.log(response);
+  
+    // useEffect(() => {
+    //     fetch('https://arcane-retreat-40409.herokuapp.com/metrics/')
+    //     .then((response) => response.json())
+    //     .then((json) => setResponse(json))
+    //     .catch((err) => console.error(err))
+    //     .finally(() => setLoading(false));
+    // }, []);
+    const diameter = Object.values(route.params.paramKey)[0];
+    const velocity = Object.values(route.params.paramKey)[1];
 
-export default function AnalysisScreen({navigation}) {
     return (
         <>
         
@@ -30,22 +34,24 @@ export default function AnalysisScreen({navigation}) {
                     <View style={styles.metricBox}>
                         <View style={styles.valueBox}>
                             <Text style={styles.metricTitle}>Diameter</Text>
-                            <Text style={styles.metricValue}>response.body</Text>
+                            {/* <Text style={styles.metricValue}>{velocity}</Text> */}
+                            <Text style={styles.metricValue}>{diameter} mm</Text>
                         </View>
 
                         <View style={styles.valueBox}>
-                            <Text style={styles.metricTitle}>Area</Text>
-                            <Text style={styles.metricValue}>3 mm2</Text>
+                            <Text style={styles.metricTitle}>Constriction Velocity</Text>
+                            <Text style={styles.metricValue}>{velocity} mm2</Text>
+
                         </View>
 
-                        <View style={styles.valueBox}>
+                        {/* <View style={styles.valueBox}>
                             <Text style={styles.metricTitle}>Light Reflex</Text>
                             <Text style={styles.metricValue}>42 mm</Text>
-                        </View>
+                        </View> */}
                     </View>
 
                 </View>
-                <View style={styles.subcontentBox}>
+                {/* <View style={styles.subcontentBox}>
                     <Text style={styles.subcontentTitle}>NEUROLOGICAL PUPILLARY INDEX</Text>
                     <View style={styles.metricBox}>
                         <View style={styles.valueBox}>
@@ -53,15 +59,16 @@ export default function AnalysisScreen({navigation}) {
                             <Text style={styles.metricValue}>3.50</Text>
                         </View>
                     </View>
-                </View>
+                </View> */}
             </View>
 
             <View style={styles.contentBox}>
                 <Text style={styles.contentTitle}>Video Replay</Text>
-                <View style={styles.imageBox}>
+                {/* <View style={styles.imageBox}>
                     <Image style={styles.images} source={require('./analysis_image.png')}></Image>
                     <Image style={styles.images} source={require('./analysis_replay.png')}></Image>
-                </View>
+                </View> */}
+                
             </View>
 
             <View style={styles.contentBox}>
