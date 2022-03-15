@@ -34,7 +34,7 @@ export default function CameraScreen({route}) {
       const body = JSON.parse(response.body);
       // setText(body.text);
       console.log(body)
-      navigation.navigate('Analysis', {paramKey: body});
+      navigation.navigate('Analysis', {paramKey: body, paramVideo: route.params.paramKey});
 
     } catch (err) {
       console.error(err);

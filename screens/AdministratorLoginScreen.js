@@ -17,7 +17,7 @@ export default function AdministratorLoginScreen({navigation}) {
 const styles = StyleSheet.create({
   adminLoginTitle: {
     fontWeight: "bold",
-    fontFamily: "Mulish",
+    // fontFamily: "Mulish",
     fontSize: 30,
     position: 'relative',
   },

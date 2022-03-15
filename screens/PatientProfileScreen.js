@@ -8,8 +8,8 @@ export default function PatientProfileScreen({navigation}) {
         </View>
         <Button title="History"
             onPress={() => navigation.navigate('PatientHistory')} />
-        <Button title="Analysis"
-            onPress={() => navigation.navigate('Analysis')} />
+        {/* <Button title="Analysis"
+            onPress={() => navigation.navigate('Analysis')} /> */}
         <Button title="Camera"
             onPress={() => navigation.navigate('Camera')} 
             />

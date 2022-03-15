@@ -1,5 +1,6 @@
 // import * as React from 'react';
 import React, { useEffect, useState } from 'react';
+import { Video } from 'expo-av';
 import {View, Button, Text, StyleSheet, TextInput, ScrollView, Image, KeyboardAvoidingView} from 'react-native';
 
 export default function AnalysisScreen({route, navigation}) {
@@ -16,6 +17,12 @@ export default function AnalysisScreen({route, navigation}) {
     // }, []);
     const diameter = Object.values(route.params.paramKey)[0];
     const velocity = Object.values(route.params.paramKey)[1];
+    const video = React.useRef(null);
+    const [status, setStatus] = React.useState({});
+    const [record, setRecord] = useState(null);
+
+
+    console.log(route.params.paramVideo)
 
     return (
         <>
@@ -62,14 +69,19 @@ export default function AnalysisScreen({route, navigation}) {
                 </View> */}
             </View>
 
-            <View style={styles.contentBox}>
+            {/* <View style={styles.contentBox}>
                 <Text style={styles.contentTitle}>Video Replay</Text>
-                {/* <View style={styles.imageBox}>
-                    <Image style={styles.images} source={require('./analysis_image.png')}></Image>
-                    <Image style={styles.images} source={require('./analysis_replay.png')}></Image>
-                </View> */}
-                
-            </View>
+                <Video
+                    ref={video}
+                    // style={styles.video}
+                    source={{
+                    uri: route.params.paramVideo,
+                    }}
+                    useNativeControls
+                    resizeMode="contain"
+                    isLooping
+                    onPlaybackStatusUpdate={status => setStatus(() => status)} />
+            </View> */}
 
             <View style={styles.contentBox}>
                 <Text style={styles.contentTitle}>Notes</Text>
@@ -119,12 +131,12 @@ const styles = StyleSheet.create({
         color: '#1D73C3'
     },
     metricBox: {
-        marginTop: 10,
-        flexDirection: 'row',
+        // marginTop: 10,
+        flexDirection: 'column',
         justifyContent: 'space-between',
     },
     valueBox: { // view
-        marginTop: 10,
+        marginTop: 20,
         flexDirection: 'column',
         justifyContent: 'space-between',
         },
